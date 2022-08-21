@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Department</title>
+    <style>
+        label {
+            margin: 3px;
+        }
+
+        input {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>
+            <a href="/department">
+                <span>Department</span>
+            </a>
+        </li>
+        <li>
+            <a href="/update-department">
+                <span>Update Department</span>
+            </a>
+        </li>
+        <li>
+            <a href="/delete-department">
+                <span>Delete Department</span>
+            </a>
+        </li>
+    </ul>
+    <h2>Add Department</h2>
+    <hr>
+    <form action="/add-department" method="post">
+        <label for="dno">Dept no. : </label>
+        <input type="text" id = "dno" name="dno">
+        <br>
+        <label for="dname">Dept Name : </label>
+        <input type="text" id="dname" name="dname">
+        <br>
+        <label for="hod">Hod Id : </label>
+        <input type="text" id="hod" name="hod">
+        <br>
+        <label for="loc">Dept Location : </label>
+        <input type="text" id="loc" name="loc">
+
+        <br>
+        <br>
+        <button type="submit">Add</button>
+        <button type="reset">Clear</button>
+    </form>
+</body>
+</html>
