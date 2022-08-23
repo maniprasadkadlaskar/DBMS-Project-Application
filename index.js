@@ -14,6 +14,11 @@ const conn = mysql.createConnection({
     database : "college_database"
 })
 
+let errorStatus = {
+    isError : false,
+    msg : ''
+}
+
 conn.connect((err) => {
     if (err)
         throw err
@@ -42,13 +47,22 @@ app.post('/add-department' , (req , res) => {
     const data = req.body
     const sqlQuery = `INSERT INTO DEPARTMENT VALUES(${data.dno} , '${data.dname}' , ${data.hod} , '${data.loc}')`
 
-    conn.query(sqlQuery , (err) => {
+    const msg = conn.query(sqlQuery , (err) => {
         if (err) {
-            throw err
+            handleError(err.sqlMessage)
         }
     })
 
-    res.redirect('/department')
+    setTimeout(() => {
+        if (errorStatus.isError) {
+            errorStatus.isError = false
+            res.send(`<h2>Error</h2> <br> <h4>${errorStatus.msg}</h4>`)
+        }
+        else {
+            res.redirect('/department')
+        }
+    } , 2000)
+    
 })
 
 app.get('/delete-department' , (req , res) => {
@@ -62,11 +76,19 @@ app.post('/delete-department' , (req , res) => {
 
     conn.query(sqlQuery , (err) => {
         if (err) {
-            throw err
+            handleError(err.sqlMessage)
         }
     })
 
-    res.redirect('/department')
+    setTimeout(() => {
+        if (errorStatus.isError) {
+            errorStatus.isError = false
+            res.send(`<h2>Error</h2> <br> <h4>${errorStatus.msg}</h4>`)
+        }
+        else {
+            res.redirect('/department')
+        }
+    } , 2000)
 })
 
 app.get('/update-department' , (req , res) => {
@@ -91,14 +113,27 @@ app.post('/update-department' , (req , res) => {
 
             conn.query(sqlQuery , (err) => {
                 if (err) {
-                    throw err
+                    handleError(err.sqlMessage)
                 }
             })
         }        
     }
 
-    res.redirect('/department')
+    setTimeout(() => {
+        if (errorStatus.isError) {
+            errorStatus.isError = false
+            res.send(`<h2>Error</h2> <br> <h4>${errorStatus.msg}</h4>`)
+        }
+        else {
+            res.redirect('/department')
+        }
+    } , 2000)
 })
+
+function handleError (msg) {
+    errorStatus.isError = true
+    errorStatus.msg = msg
+}
 
 app.listen(8000 , () => {
     console.log('Server is started')
